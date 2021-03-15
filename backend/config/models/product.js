@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require('../database/bd')
 
 const ProductSchema = new mongoose.Schema({
 
@@ -12,20 +12,26 @@ const ProductSchema = new mongoose.Schema({
         required: true
     },
     price:{
-        type: String,
+        type: Number,
         required: true
     },
     images:{
         type: [String],
-        items:{type:[String]},
-        maxItems:3,
-        minItems:0
+        validate:[imageLimit, 'Limit']
     },
     createBy:{
-        type: String
+        type: String,
+        required: true
+    },
+    createIn:{
+        type: Date,
+        default: Date.now
     }
-    
 })
+
+function imageLimit(val) {
+    return val.length <= 3;
+  }
 
 const Product = mongoose.model('Product', ProductSchema)
 
