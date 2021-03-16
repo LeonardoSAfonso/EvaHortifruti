@@ -1,70 +1,105 @@
-const express = require('express')
-const authMiddleware = require('../middleware/auth')
-const Product = require('../models/product')
+const connection = require('../database/bd')
 
-const router = express.Router()
+module.exports = {
+    //Método para cadastrar um produto
+    async create(req, res) {
 
-router.use(authMiddleware)
+        //Cria o produto conforme os campos no body e o userId do Token
+        try {
 
-//Método para cadastrar um produto
-router.post('/', async (req, res) => {
+            console.log('Produto', req.userId)
+            const { name, description, price, images } = req.body
 
-    try{
+            if (images.length > 3) {
+                return res.status(400).send({ error: 'Image Limit Exceeded' })
+            }
 
-        //pega o usuário logado pelo token de acesso
-        const userId = req.userId
+            const [idProd] = await connection('Products').returning('id').insert({ name, description, price, images, createBy: req.userId})
 
-        //pega os campos inseridos no body
-        const {name, description, price, images} = req.body
+            console.log('ID produto', idProd)
+            const produto = await connection('Products').where({id: idProd}).select('*')
 
-        //cria o produto conforme os campos definidos anteriormente
-        const product = await Product.create({
-            name: name,
-            description: description,
-            price:price,
-            images: images,
-            createBy: userId
-        })
+            return res.json(produto)
 
-        return res.send(product)
-
-    }catch(err){
-        return res.status(400).send({error: 'Product registration Failed'})
-    }
-
-})
-
-//Metodo para listar todos os produtos
-router.get('/', async (req, res) => {
-
-    try{
-
-        const list = await Product.find()
-
-        return res.send(list)
-
-    }catch(err){
-        return res.status(500).send(err)
-    }
-})
-
-router.get('/:id', async (req, res)=>{
-
-    try{
-
-        const id = req.params.id
-        const produto = await Product.findById(id) 
-
-        if(produto){
-            return res.send(produto)
-        }else{
-            return res.status(404).send({error:'Product Not Found'})
+        } catch (err) {
+            console.log(err)
+            return res.status(400).send({ error: 'Product registration Failed' })
         }
 
-    }catch(err){
-        return res.status(500).send(err)
+    },
+
+    //Metodo para listar todos os produtos
+    async index(req, res) {
+
+        try {
+
+            const list = await connection('Products').join('Users', 'Users.id', '=', 'createBy')
+                .select('Products.id','Products.name', 'description', 'price', 'images', 'createBy', 'Users.name as userName')
+
+            return res.json(list)
+
+        } catch (err) {
+            console.log(err)
+            return res.status(500).send(err)
+        }
+    },
+
+    //Metodo para detalhar um unico produto
+    async getByID(req, res) {
+
+        //Exibe o produto com o Id informado
+        try {
+
+            const produto = await connection('Products').where({id: req.params.id})
+                .select('name', 'description', 'price', 'images', 'createBy').first()
+
+            if (produto) {
+                return res.send(produto)
+            } else {
+                return res.status(404).send({ error: 'Product Not Found' })
+            }
+
+        } catch (err) {
+            return res.status(500).send(err)
+        }
+
+    },
+
+    //Metodo para atualizar o cadastro de um produto
+    async update(req, res) {
+
+        //Atualiza o produto com o Id informado conforme os campos no body e o userId do Token
+        try {
+
+            const { name, description, price, images } = req.body
+
+            if (images.length > 3) {
+                return res.status(400).send({ error: 'Image Limit Exceeded' })
+            }
+            const [product] = await connection('Products').returning(['id','name', 'description', 'price', 'images']).where({id: req.params.id})
+            .update({ name, description, price, images })
+
+            return res.json(product)
+
+        } catch (err) {
+            return res.status(400).send({ error: 'Product Update Failed' })
+        }
+
+    },
+
+    //Metodo para deletar o cadastro de um produto
+    async delete(req, res) {
+
+        //Remove o produto com o Id informado
+        try {
+
+            const produto = await connection('Products').where({id: req.params.id})
+                .del()
+
+            return res.sendStatus(204)
+
+        } catch (err) {
+            return res.status(500).send(err)
+        }
     }
-
-} )
-
-module.exports = app => app.use('/produtos', router)
+}

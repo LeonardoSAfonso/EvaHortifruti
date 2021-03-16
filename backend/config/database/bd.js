@@ -1,8 +1,6 @@
-const mongoose = require('mongoose')
+const knexfile = require('../../knexfile')
+const knex = require('knex')(knexfile['development'])
 
-mongoose.connect('mongodb://localhost/testeEva', { useNewUrlParser: true , useUnifiedTopology: true, useCreateIndex: true })
-mongoose.Promise = global.Promise;
-
-module.exports = mongoose;
+module.exports = knex;
 
 
