@@ -1,28 +1,23 @@
 const connection = require('../database/bd')
 
 module.exports = {
+    
     //Método para cadastrar um produto
     async create(req, res) {
 
         //Cria o produto conforme os campos no body e o userId do Token
         try {
-
-            console.log('Produto', req.userId)
             const { name, description, price, images } = req.body
 
             if (images.length > 3) {
                 return res.status(400).send({ error: 'Image Limit Exceeded' })
             }
 
-            const [idProd] = await connection('Products').returning('id').insert({ name, description, price, images, createBy: req.userId})
-
-            console.log('ID produto', idProd)
-            const produto = await connection('Products').where({id: idProd}).select('*')
+            const [produto] = await connection('Products').returning('*').insert({ name, description, price, images, createBy: req.userId})
 
             return res.json(produto)
 
         } catch (err) {
-            console.log(err)
             return res.status(400).send({ error: 'Product registration Failed' })
         }
 
@@ -39,7 +34,6 @@ module.exports = {
             return res.json(list)
 
         } catch (err) {
-            console.log(err)
             return res.status(500).send(err)
         }
     },

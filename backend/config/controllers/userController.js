@@ -18,17 +18,14 @@ module.exports = {
 
         const {name, email, password} = req.body
 
+        //criptografa a senha antes de armazenala no banco
         const hash = await bcrypt.hash(password, 10)
 
-        const [idUser] = await connection('Users').returning('id').insert({
+        const [user] = await connection('Users').returning(['id','name', 'email']).insert({
             name,
             email,
             password: hash
         })
-
-        const user = await connection('Users').where({id: idUser}).select('id','email', 'password').first()
-
-        console.log('userId', idUser)
         
         res.json({user, token: generateToken({id: user.id})})
 
