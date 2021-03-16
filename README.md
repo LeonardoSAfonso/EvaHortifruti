@@ -15,7 +15,7 @@
 Tabela de conteúdos
 =================
 <!--ts-->
-   * [Sobre o projeto](#-sobre-o-projeto)
+   * [Sobre o projeto](#-sobre-o-projeto-)
    * [Funcionalidades](#-funcionalidades)
    * [Como executar o projeto](#-como-executar-o-projeto)
      * [Pré-requisitos](#pré-requisitos)
@@ -27,13 +27,13 @@ Tabela de conteúdos
 <!--te-->
 
 
-## 💻 Sobre o projeto
+## 🔵 Sobre o projeto 🔵
 
 Api para cadastro de usuários e produtos desenvolvida como projeto para demonstração de minhas habilidades em desenvolvimento focado em backend.
 
 ---
 
-## ⚙️Funcionalidades
+## ⚙️ Funcionalidades
 
 - [x] Cadastro de usuários informando:
   - [x] nome
@@ -94,9 +94,9 @@ $ cd backend
 
 # Edite o arquivo knexfile.js, pode utilizar qualquer editor de código ou ainda utilizar o bloco de notas.
 $ Altere os campos 'user' e 'password' para que fiquem conforme o usuário e senha configurados em seu Postgre
-
+```
 ![image](https://user-images.githubusercontent.com/50267081/111364125-9be68600-866f-11eb-8c9e-daf79d22857d.png)
-
+``` bash
 # Em seu terminal/cmd instale as dependências
 $ npm install
 
@@ -137,6 +137,6 @@ As seguintes ferramentas foram usadas na construção do projeto:
 
 [Leonardo Afonso](https://github.com/LeonardoSAfonso)
  
-[![outlook Badge](https://img.shields.io/badge/-leonardo.s_afonso@hotmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:leonardo.s_afonso@hotimail.com)](mailto:leonardo.s_afonso@hotimail.com)
+[![outlook Badge](https://img.shields.io/badge/-leonardo.s_afonso@hotmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:leonardo.s_afonso@hotmail.com)](mailto:leonardo.s_afonso@hotmail.com)
 
 ---
