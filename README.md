@@ -137,6 +137,6 @@ As seguintes ferramentas foram usadas na construção do projeto:
 
 [Leonardo Afonso](https://github.com/LeonardoSAfonso)
  
-[![outlook Badge](https://img.shields.io/badge/-leonardo.s_afonsomail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:leonardo.s_afonso@hotimail.com)](mailto:leonardo.s_afonso@hotimail.com)
+[![outlook Badge](https://img.shields.io/badge/-leonardo.s_afonso@hotmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:leonardo.s_afonso@hotimail.com)](mailto:leonardo.s_afonso@hotimail.com)
 
 ---
