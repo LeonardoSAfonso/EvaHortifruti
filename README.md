@@ -1,11 +1,11 @@
 ![Eva Hort-Frut](https://user-images.githubusercontent.com/50267081/111349282-c29cc080-865f-11eb-92fd-598380748420.png)
 
 <h1 align="center">
-     Eva Hort-Frut API
+     Eva HortiFrúti API
 </h1>
 
 <h3 align="center">
-    🍎 Uma API de usu simples para o melhor controle se seu hort-frut. 🐍
+    🍎 Uma API de uso simples para o melhor controle se seu hortifrúti. 🐍
 </h3>
 
 <h4 align="center">
@@ -75,7 +75,7 @@ Além disto é necessário que possua uma ferramenta para testar serviços RESTf
 $ psql -U seuUsuárioPostgres
 
 # Crie o banco que vamos utilizar na aplicação
-$ CREATE DATABASE eva_hortfrut; 
+$ CREATE DATABASE eva_hortifruti; 
 
 ```
 
@@ -109,6 +109,21 @@ $ npm start
 # O servidor inciará na porta:3333 - acesse http://localhost:3333
 ```
 
+#### Utilizando a API
+
+##### Cadastro de usuário 
+
+##### Login de usuário
+
+##### Exclusão de usuário
+
+##### Cadastro de Produtos
+
+##### Listagem de Produtos
+
+##### atualização de Produtos
+
+##### Exclusão de Produtos
 ---
 
 ## 🛠 Tecnologias

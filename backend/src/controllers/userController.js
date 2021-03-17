@@ -1,9 +1,10 @@
-const connection = require('../database/bd')
+const connection = require('../../config/database/bd')
+
 
 
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const authToken = require('../auth.json')
+const authToken = require('../../config/auth.json')
 
 
 function generateToken(params = {}){

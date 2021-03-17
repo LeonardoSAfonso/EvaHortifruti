@@ -8,6 +8,9 @@ exports.up =function(knex) {
         table.specificType('images', 'text  ARRAY')
         table.timestamp('createAt').defaultTo(knex.fn.now())
         table.integer('createBy').notNullable()
+        table.timestamp('lastModifiedAt').defaultTo(knex.fn.now())
+        table.integer('lastModifiedBy').notNullable()
+
     })
 };
 

@@ -1,4 +1,4 @@
-const connection = require('../database/bd')
+const connection = require('../../config/database/bd')
 
 module.exports = {
     
@@ -13,7 +13,7 @@ module.exports = {
                 return res.status(400).send({ error: 'Image Limit Exceeded' })
             }
 
-            const [produto] = await connection('Products').returning('*').insert({ name, description, price, images, createBy: req.userId})
+            const [produto] = await connection('Products').returning('*').insert({ name, description, price, images, createBy: req.userId, lastModifiedBy: req.userId})
 
             return res.json(produto)
 
@@ -29,7 +29,8 @@ module.exports = {
         try {
 
             const list = await connection('Products').join('Users', 'Users.id', '=', 'createBy')
-                .select('Products.id','Products.name', 'description', 'price', 'images', 'createBy', 'Users.name as userName')
+                .select('Products.id','Products.name', 'description', 'price', 'images', 'createBy',
+                    'lastModifiedBy', 'createAt', 'lastModifiedAt', 'Users.name as userName')
 
             return res.json(list)
 
@@ -70,12 +71,14 @@ module.exports = {
             if (images.length > 3) {
                 return res.status(400).send({ error: 'Image Limit Exceeded' })
             }
-            const [product] = await connection('Products').returning(['id','name', 'description', 'price', 'images']).where({id: req.params.id})
-            .update({ name, description, price, images })
+            const [product] = await connection('Products').returning(['id','name', 'description', 'price', 'images', 'lastModifiedBy', 'lastModifiedAt'])
+            .where({id: req.params.id})
+            .update({ name, description, price, images, lastModifiedBy: req.userId, lastModifiedAt: new Date()})
 
             return res.json(product)
 
         } catch (err) {
+            console.log(err)
             return res.status(400).send({ error: 'Product Update Failed' })
         }
 
